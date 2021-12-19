@@ -16,6 +16,7 @@ import Login from './Login/Login.js';
 import NotFound from './UI/NotFound.js';
 import Booking from './Booking/Booking.js';
 import Home from './Home/Home.js';
+import Test from './Tests/Tests.js';
 
 /**
  * npm i react-router-dom
@@ -23,13 +24,15 @@ import Home from './Home/Home.js';
  * npm install @emotion/react
  * npm install @emotion/styled
  * npm i react-google-login
+ * npm install axios
 */
 
 function App() {
-  
   return (
     
     <React.Fragment>
+      {/*console.log(window.sessionStorage.getItem("loggedId"))*/}
+      {/*console.log(window.sessionStorage.getItem("loggedEmail"))*/}
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
             
@@ -41,17 +44,19 @@ function App() {
           </Route>
 
 
-          {/**
+          {
+          /**
             if(isLoggedIn() ){ //chiama una funzione qua su react che chiama una post sul db che chiede se è logged in e restituisce true o false
               return <button>Logout</button>
             } else{
               return <button>Login</button>
             }
-          */}
+          */
+          }
 
           <Route path="/Home" element={
             <React.Fragment>
-              <Appbar />
+              <Appbar/>
               <Home />
               <Footer />
             </React.Fragment>
@@ -60,7 +65,7 @@ function App() {
 
           <Route path="/Pricing" element={
             <React.Fragment>
-              <Appbar />
+              <Appbar/>
               <Pricing />
               <Footer />
             </React.Fragment>
@@ -69,7 +74,7 @@ function App() {
 
           <Route path="/Booking" element={
             <React.Fragment>
-              <Appbar />
+              <Appbar/>
               <Booking />
               <Footer />
             </React.Fragment>
@@ -77,17 +82,14 @@ function App() {
           </Route>
 
           <Route path="/Login" element={
-            <Login />
+            <Login/>
           }>
           </Route>
 
-
-
-
-
-
-
-
+          <Route path="/Tests" element={
+            <Test/>
+          }>
+          </Route>
 
           <Route path="/*" element={
             <NotFound />

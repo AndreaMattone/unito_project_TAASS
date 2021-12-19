@@ -64,7 +64,7 @@ function Login (){
                 Sign In
               </Button>
               <div style={{margin:'2%'}}>
-                <LoginGoogle />
+                <LoginGoogle/>
               </div>  
               {/*<div style={{margin:'2%'}}>
                 <LogoutGoogle />
