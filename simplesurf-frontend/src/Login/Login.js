@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,9 +10,50 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LoginGoogle from './LoginGoogle.js';
 import LogoutGoogle from './LogoutGoogle.js';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 function Login (){
+  const history = useNavigate();
+  
+
+  /**
+   * Check password Fittizio
+   */
+  function localLogin(){
+    if(password.localeCompare("admin")==0){
+      if(username.localeCompare("admin")==0){
+        var datas =
+        { 
+          "id": 10,
+          "emailMyUser" : "admin",
+          "isLog" : "true",
+          "usrResponsailities": "instructor"
+        }
+        axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
+        .then(function (response) {
+          console.log(response);
+          window.sessionStorage.setItem("loggedId",String(10));
+          window.sessionStorage.setItem("loggedEmail","admin");
+          window.sessionStorage.setItem("loggedResp","instructor");
+          window.location.reload();
+         })
+         .catch(function (error) {
+             console.log(error);
+          });
+          setLoginText("");
+          history('/Requests');
+      }else{
+        setLoginText("Incorrect Username");
+      }
+    }else{
+      setLoginText("Incorrect Password");
+    }
+  }
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [loginText, setLoginText] = useState("");
   return(
     <React.Fragment>
       <ThemeProvider theme={theme}>
@@ -41,7 +83,7 @@ function Login (){
                 name="email"
                 autoComplete="email"
                 autoFocus
-                disabled 
+                onChange={e => setUsername(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -52,14 +94,17 @@ function Login (){
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                disabled 
+                onChange={e => setPassword(e.target.value)}
               />
+              <Typography style={{color:'red'}} >
+                {loginText}
+              </Typography>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled 
+                onClick={localLogin}
               >
                 Sign In
               </Button>

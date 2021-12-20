@@ -1,8 +1,6 @@
 package com.example.simplesurfbackendms2.models;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -12,13 +10,16 @@ public class MyUser {
     private Long id;
     private String emailMyUser;
     private String isLog;
+    private String usrResponsailities;
 
     public MyUser() {
     }
-    public MyUser(Long id, String emailMyUser, String isLog) {
+
+    public MyUser(Long id, String emailMyUser, String isLog, String usrResponsailities) {
         this.id = id;
         this.emailMyUser = emailMyUser;
         this.isLog = isLog;
+        this.usrResponsailities = usrResponsailities;
     }
 
     public Long getId() {
@@ -39,12 +40,20 @@ public class MyUser {
     public void setIsLog(String loggedIn) {
         isLog = loggedIn;
     }
+    public String getUsrResponsailities() {
+        return usrResponsailities;
+    }
+    public void setUsrResponsailities(String usrResponsailities) {
+        this.usrResponsailities = usrResponsailities;
+    }
+
     @Override
     public String toString() {
         return "{" +
                 "id=" + id +
                 ", emailMyUser='" + emailMyUser + '\'' +
-                ", isLog=" + isLog +
+                ", isLog='" + isLog + '\'' +
+                ", usrResponsailities='" + usrResponsailities + '\'' +
                 '}';
     }
 }

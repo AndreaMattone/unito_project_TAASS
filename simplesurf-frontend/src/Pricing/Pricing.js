@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -9,8 +10,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
-/**Elenco delle cards al centro */
-const tiers = [
+
+
+function Pricing(){
+
+  /**Elenco delle cards al centro */
+  const tiers = [
     {
       title: 'Group Lessons',
       price: '30',
@@ -19,7 +24,7 @@ const tiers = [
       ],
       buttonText: 'Get started',
       buttonVariant: 'outlined',
-      onClickAction: ()=>{alert('clicked')},
+      onClickAction: clickedGetStarted,
     },
     {
       title: 'Private Group Lessons',
@@ -30,7 +35,7 @@ const tiers = [
       ],
       buttonText: 'Get started',
       buttonVariant: 'contained',
-      onClickAction: ()=>{alert('clicked')},
+      onClickAction:  clickedGetStarted,
     },
     {
       title: 'Private Lessons',
@@ -40,11 +45,21 @@ const tiers = [
       ],
       buttonText: 'Get started',
       buttonVariant: 'outlined',
-      onClickAction: ()=>{alert('clicked')},
+      onClickAction: clickedGetStarted,
     },
   ];
+
+  const history = useNavigate();
+  function clickedGetStarted(){
+    //console.log("clicked");
+    if(window.sessionStorage.getItem("loggedId")==0 || window.sessionStorage.getItem("loggedId")==null ){ //is not logged in
+      history('/Login');
+    }else{ //is logged in 
+      history('/Booking');
+      
+    }
+  }
   
-function Pricing(){
   return(
     <React.Fragment>
       {/* Presentation */}

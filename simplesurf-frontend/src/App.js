@@ -17,22 +17,26 @@ import NotFound from './UI/NotFound.js';
 import Booking from './Booking/Booking.js';
 import Home from './Home/Home.js';
 import Test from './Tests/Tests.js';
+import Requests from './Instructors/Requests';
 
 /**
- * npm i react-router-dom
- * npm install @mui/material
+ * npm i react-router-dom         //Routing
+ * npm install @mui/material      //UI
  * npm install @emotion/react
  * npm install @emotion/styled
- * npm i react-google-login
- * npm install axios
+ * npm i react-google-login       //google login
+ * npm install axios              //Rest calls
+ * npm install react-calendar     //calendar
 */
 
 function App() {
+  
   return (
     
     <React.Fragment>
-      {/*console.log(window.sessionStorage.getItem("loggedId"))*/}
-      {/*console.log(window.sessionStorage.getItem("loggedEmail"))*/}
+      {console.log("loggedId: " + window.sessionStorage.getItem("loggedId"))}
+      {console.log("loggedEmail: " + window.sessionStorage.getItem("loggedEmail"))}
+      {console.log("loggedResponsability: " + window.sessionStorage.getItem("loggedResp"))}
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
             
@@ -43,17 +47,6 @@ function App() {
           }>
           </Route>
 
-
-          {
-          /**
-            if(isLoggedIn() ){ //chiama una funzione qua su react che chiama una post sul db che chiede se è logged in e restituisce true o false
-              return <button>Logout</button>
-            } else{
-              return <button>Login</button>
-            }
-          */
-          }
-
           <Route path="/Home" element={
             <React.Fragment>
               <Appbar/>
@@ -62,6 +55,8 @@ function App() {
             </React.Fragment>
           }>
           </Route>
+
+          
 
           <Route path="/Pricing" element={
             <React.Fragment>
@@ -88,6 +83,15 @@ function App() {
 
           <Route path="/Tests" element={
             <Test/>
+          }>
+          </Route>
+
+          <Route path="/Requests" element={
+            <React.Fragment>
+              <Appbar/>
+              <Requests/>
+              <Footer />
+            </React.Fragment>
           }>
           </Route>
 

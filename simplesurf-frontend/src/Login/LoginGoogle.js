@@ -29,13 +29,16 @@ function LoginGoogle(){
     { 
       "id": Number(googleId/100000),
       "emailMyUser" : googleEmail,
-      "isLog" : "true"
+      "isLog" : "true",
+      "usrResponsailities": "user"
+      
     }
     axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
     .then(function (response) {
       console.log(response);
       window.sessionStorage.setItem("loggedId",String(googleId/100000));
       window.sessionStorage.setItem("loggedEmail",googleEmail);
+      window.sessionStorage.setItem("loggedResp","user");
       window.location.reload();
      })
      .catch(function (error) {
