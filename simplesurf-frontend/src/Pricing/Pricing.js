@@ -52,7 +52,7 @@ function Pricing(){
   const history = useNavigate();
   function clickedGetStarted(){
     //console.log("clicked");
-    if(window.sessionStorage.getItem("loggedId")==0 || window.sessionStorage.getItem("loggedId")==null ){ //is not logged in
+    if(window.sessionStorage.getItem("loggedId").localeCompare("null") == 0){ //is not logged in
       history('/Login');
     }else{ //is logged in 
       history('/Booking');

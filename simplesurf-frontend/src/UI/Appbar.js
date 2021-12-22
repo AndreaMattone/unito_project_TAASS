@@ -1,150 +1,58 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
-import LogoutGoogle from '../Login/LogoutGoogle';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import LogoutStatic from '../Login/LogoutStatic.js';
 //import simplesurflogo from '../imgs/simplesurflogo.png';
+import AppbarNotLogged from './AppBars/AppbarNotLogged';
+import AppbarClient from './AppBars/AppbarClient';
+import AppbarInstructor from './AppBars/AppbarInstructor';
+
 
 function Appbar(){
-    if(window.sessionStorage.getItem("loggedId") == 0 || window.sessionStorage.getItem("loggedId") == null){ //not logged
-        return(
-            <React.Fragment>
-                <AppBar
-                    position="static"
-                    color="default"
-                    elevation={0}
-                    sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-                >
-                    <Toolbar sx={{ flexWrap: 'wrap' }}>
-                        <Typography style={{marginTop:'0.5%', font:'Roboto' }}  variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            {/*<img src={simplesurflogo} alt='simplesurf_logo' />*/}
-                            SimpleSurf
-                        </Typography>
-                        {/**Barra nav links */}
-                        <nav>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="/Home"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="/Pricing"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Pricing
-                        </Link>
-                        </nav>
     
-                        {/**Login button */}
-                        <Button href="/Login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-                            Login
-                        </Button>
-    
-                        
-    
-    
-                    </Toolbar>
-                </AppBar>
-            </React.Fragment>
-        );
-    }else{ //logged in
-
-        if(window.sessionStorage.getItem("loggedResp").localeCompare("user")==0){ //user
-            return(
-                <React.Fragment>
-                    <AppBar
-                        position="static"
-                        color="default"
-                        elevation={0}
-                        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-                    >
-                        <Toolbar sx={{ flexWrap: 'wrap' }}>
-                            <Typography style={{marginTop:'0.5%', font:'Roboto' , color:'', fontWeight:''}} variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                                SimpleSurf
-                            </Typography>
-                            {/**Barra nav links */}
-                            <nav>
-                            <Link
-                                variant="button"
-                                color="text.primary"
-                                href="/Home"
-                                sx={{ my: 1, mx: 1.5 }}
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                variant="button"
-                                color="text.primary"
-                                href="/Pricing"
-                                sx={{ my: 1, mx: 1.5 }}
-                            >
-                                Pricing
-                            </Link>
-                            <Link
-                                variant="button"
-                                color="text.primary"
-                                href="/Booking"
-                                sx={{ my: 1, mx: 1.5 }}
-                            >
-                                Booking
-                            </Link>
-                            </nav>
-        
-                            {/**Logout button */}
-                            <LogoutGoogle />
-                
-                        </Toolbar>
-                        
-                    </AppBar>
-                </React.Fragment>
-            );
-        }else if(window.sessionStorage.getItem("loggedResp").localeCompare("instructor")==0){ //instructor
-            return(
-                <React.Fragment>
-                    <AppBar
-                        position="static"
-                        color="default"
-                        elevation={0}
-                        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-                    >
-                        <Toolbar sx={{ flexWrap: 'wrap' }}>
-                            <Typography style={{marginTop:'0.5%'}} variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                                SimpleSurf
-                            </Typography>
-                            {/**Barra nav links */}
-                            <nav>
-                            <Link
-                                variant="button"
-                                color="text.primary"
-                                href="/Requests"
-                                sx={{ my: 1, mx: 1.5 }}
-                            >
-                                Requests
-                            </Link>
-                            </nav>
-        
-                            {/**Logout button */}
-                            <LogoutStatic />
-                
-                        </Toolbar>
-                    </AppBar>
-                </React.Fragment>
-            );
-        }else{ //admin o altri userResponsabilities
-
+    useEffect(() => {
+        getUserResponsability();
+    }, []);
+    async function getUserResponsability(){
+        if(window.sessionStorage.getItem("loggedId") === null || window.sessionStorage.getItem("loggedId").localeCompare("null") == 0){
+            setUsrResponsability("null");
+        }else{
+            try{
+                axios.post('http://localhost:3001/api/v1/myUsers/getResp', {"id": Number(window.sessionStorage.getItem("loggedId"))})
+                .then(function (response) {
+                  //console.log(response);
+                  //console.log(response.data);
+                  if(response.data.localeCompare("user not exist")==0){
+                    setUsrResponsability("null");
+                    window.sessionStorage.setItem("loggedId","null");
+                  }else{
+                    setUsrResponsability(response.data);
+                  }
+                 })
+                 .catch(function (error) {
+                     console.log(error);
+                  });
+            }catch(error){
+            }
         }
         
     }
+    const [ usrResponsability, setUsrResponsability ] = useState("null");
     
+    if(usrResponsability.localeCompare("null") == 0){ //not logged
+        return(
+        <AppbarNotLogged />
+            );
+    }else{ //logged in
+        if(usrResponsability.localeCompare("user")==0){ //user
+            return(
+            <AppbarClient />
+            );
+        }else if(usrResponsability.localeCompare("instructor")==0){ //instructor
+            return(
+                <AppbarInstructor />
+            );
+        }else{ //admin o altri userResponsabilities 
+        }
+    }
 }
 
 export default Appbar;

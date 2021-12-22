@@ -30,9 +30,11 @@ function Booking(){
         }catch(error){}
     }
 
+    const [errorText, setErrorText] = useState("");
+    const [successText, setSuccessText] = useState("");
     const [selectedSlot, setSelectedSlot] = React.useState('morning');
     const [instructorsList, setInstructorsList ] = React.useState([]);
-    const [instructor, setInstructor] = React.useState('');
+    const [instructor, setInstructor] = React.useState(0);
     const [selectedDateOnCalendar, setSelectedDateOnCalendar] = useState(new Date());
     let selectedDay = selectedDateOnCalendar.getDate(); //giorno del mese
     let selectedMonth = selectedDateOnCalendar.getMonth(); //gennaio 0, lunedi 1, martedi 2...
@@ -47,28 +49,38 @@ function Booking(){
 
 
     const postReservation = () =>{
-        /*console.log("RESERVE in date " + "Day: " + selectedDay + 
-            " Month: " + selectedMonth + " Year: " + selectedYear + " in the slot: " + 
-                selectedSlot + " with the instructor: " + instructor + " for the client: " + 
-                    window.sessionStorage.getItem("loggedId"));*/
-        /**Adding the reservation in the database */
-        const datas =
-        { 
-            "clientId": Number(window.sessionStorage.getItem("loggedId")),
-            "instructorId": Number(instructor),
-            "year": String(selectedYear),
-            "month": String(selectedMonth),
-            "day" : String(selectedDay),
-            "slot" : String(selectedSlot)
-        }
-        axios.post('http://localhost:8080/api/v1/reservations/create', datas)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-       
+        console.log(instructor)
+        if(instructor===0){
+            setSuccessText("");
+            setErrorText("You have to validate all fields");
+        }else{
+            const datas =
+            { 
+                "clientId": Number(window.sessionStorage.getItem("loggedId")),
+                "instructorId": Number(instructor),
+                "year": String(selectedYear),
+                "month": String(selectedMonth),
+                "day" : String(selectedDay),
+                "slot" : String(selectedSlot)
+            }
+            axios.post('http://localhost:8080/api/v1/reservations/create', datas)
+                .then(function (response) {
+                    console.log(response);
+                    if(response.data.localeCompare("ok")===0){
+                        setSuccessText("Book completed!");
+                        setErrorText("");
+                    }else if(response.data.localeCompare("resExistYet")===0){
+                        setSuccessText("");
+                        setErrorText("Book still exist!");
+                    }else if(response.data.localeCompare("ko")===0){
+                        setSuccessText("");
+                        setErrorText("Error!");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
     }
 
 
@@ -135,11 +147,17 @@ function Booking(){
                     </Container>
                 </div>
 
-
+                
                 { /** ################################ Book reservation ################################ */ }
                 <div align="center">
                 <Container disableGutters maxWidth="md" component="main" sx={{ pt: 2, pb: 2 }} >
                     <Button variant="outlined" onClick={postReservation}>Book</Button>
+                    <Typography style={{color:'red'}} >
+                        {errorText}
+                    </Typography>
+                    <Typography style={{color:'green'}} >
+                        {successText}
+                    </Typography>
                 </Container>
                 </div>
                 

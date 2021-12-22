@@ -19,10 +19,7 @@ function LoginGoogle(){
     // initializing the setup
     refreshTokenSetup(res);
 
-
-    /**
-     * Saving data to DB and session
-     */
+    /** Saving data to DB and session */
     const googleId = res.profileObj.googleId;
     const googleEmail = res.profileObj.email;
     var datas =
@@ -31,23 +28,17 @@ function LoginGoogle(){
       "emailMyUser" : googleEmail,
       "isLog" : "true",
       "usrResponsailities": "user"
-      
     }
     axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
     .then(function (response) {
       console.log(response);
       window.sessionStorage.setItem("loggedId",String(googleId/100000));
-      window.sessionStorage.setItem("loggedEmail",googleEmail);
-      window.sessionStorage.setItem("loggedResp","user");
       window.location.reload();
      })
      .catch(function (error) {
          console.log(error);
       });
-
-
   }
-
 
   /**
    * On failure function

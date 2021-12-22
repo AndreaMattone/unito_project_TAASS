@@ -4,22 +4,23 @@ import Button from '@mui/material/Button';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
+
 function Tests () {
  
 const datas =
   { 
-    "id":0,
-    "emailMyUser" : "/",
-    "isLog": "/",
-    "usrResponsailities": "/"
-}
+    "id":10,
+  }
 const datasModified =
 { 
-  "id":0,
+  "id":10,
   "emailMyUser" : "/",
   "isLog": "/",
   "usrResponsailities": "/"
 }
+
+
+
 function testPost(){
     axios.post('http://localhost:3001/api/v1/myUsers/create', datas)
     .then(function (response) {
@@ -32,6 +33,16 @@ function testPost(){
 function testGet(){
       axios.get('http://localhost:3001/api/v1/myUsers')
       .then(response => console.log(response.data));
+}
+
+function getUserInfo(){
+  axios.post('http://localhost:3001/api/v1/myUsers/getMyUserInfo',datas)
+  .then(function (response) {
+    console.log(response);
+   })
+   .catch(function (error) {
+       console.log(error);
+    });
 }
 function testGetClients(){
   axios.get('http://localhost:3001/api/v1/myClients')
@@ -54,7 +65,6 @@ function testIfExists(){
     axios.post('http://localhost:3001/api/v1/myUsers/checkIfUserExists', datas)
     .then(function (response) {
       console.log(response);
-      console.log(response.data);
      })
      .catch(function (error) {
          console.log(error);
@@ -72,8 +82,6 @@ function testResp(){
 }
 
 const [value, onChange] = useState(new Date());
-
-
   return (
     <React.Fragment>
       <div style={{margin:"30px"}}>
@@ -84,6 +92,7 @@ const [value, onChange] = useState(new Date());
         <Button onClick={testUpdate} variant="outlined" >testUpdate</Button>
         <Button onClick={testIfExists} variant="outlined" >testIfExists</Button>
         <Button onClick={testResp} variant="outlined" >testResp</Button>
+        <Button onClick={getUserInfo} variant="outlined" >getUserInfo</Button>
       </div>
 
       <div  style={{margin:"30px"}}>

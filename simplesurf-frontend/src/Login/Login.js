@@ -35,8 +35,6 @@ function Login (){
         .then(function (response) {
           console.log(response);
           window.sessionStorage.setItem("loggedId",String(10));
-          window.sessionStorage.setItem("loggedEmail","admin");
-          window.sessionStorage.setItem("loggedResp","instructor");
           window.location.reload();
          })
          .catch(function (error) {

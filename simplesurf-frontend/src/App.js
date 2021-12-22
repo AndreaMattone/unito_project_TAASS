@@ -34,9 +34,6 @@ function App() {
   return (
     
     <React.Fragment>
-      {console.log("loggedId: " + window.sessionStorage.getItem("loggedId"))}
-      {console.log("loggedEmail: " + window.sessionStorage.getItem("loggedEmail"))}
-      {console.log("loggedResponsability: " + window.sessionStorage.getItem("loggedResp"))}
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
             
