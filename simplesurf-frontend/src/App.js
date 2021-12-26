@@ -21,6 +21,7 @@ import Requests from './Instructors/Requests';
 import Account from './Account/Account';
 
 /**
+ * npm i react-scripts
  * npm i react-router-dom         //Routing
  * npm install @mui/material      //UI
  * npm install @emotion/react
