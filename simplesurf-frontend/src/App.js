@@ -18,6 +18,7 @@ import Booking from './Booking/Booking.js';
 import Home from './Home/Home.js';
 import Test from './Tests/Tests.js';
 import Requests from './Instructors/Requests';
+import Account from './Account/Account';
 
 /**
  * npm i react-router-dom         //Routing
@@ -87,6 +88,15 @@ function App() {
             <React.Fragment>
               <Appbar/>
               <Requests/>
+              <Footer />
+            </React.Fragment>
+          }>
+          </Route>
+
+          <Route path="/Account" element={
+            <React.Fragment>
+              <Appbar/>
+              <Account/>
               <Footer />
             </React.Fragment>
           }>

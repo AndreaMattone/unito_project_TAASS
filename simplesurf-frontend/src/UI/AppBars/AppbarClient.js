@@ -7,8 +7,16 @@ import Button from '@mui/material/Button';
 import LogoutGoogle from '../../Login/LogoutGoogle';
 import axios from 'axios';
 import LogoutStatic from '../../Login/LogoutStatic';
+import Avatar from '@mui/material/Avatar';
+import { useNavigate } from "react-router-dom";
+
 
 const AppbarClient = () => {
+    const history = useNavigate();
+
+    function onAvatarClick(){
+        history('/Account');
+    }
     return(
     <React.Fragment>
         <AppBar
@@ -48,10 +56,11 @@ const AppbarClient = () => {
                     Booking
                 </Link>
                 </nav>
-
+                
                 {/**Logout button */}
                 <LogoutGoogle />
-    
+                <Avatar style={{marginLeft:'1%',marginRight:'1%'}} alt="U" src="/static/images/avatar/3.jpg" onClick={onAvatarClick}/>
+                
             </Toolbar>
             
         </AppBar>

@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -72,6 +72,9 @@ function Booking(){
                     }else if(response.data.localeCompare("resExistYet")===0){
                         setSuccessText("");
                         setErrorText("Book still exist!");
+                    }else if(response.data.localeCompare("pastDate")===0){
+                        setSuccessText("");
+                        setErrorText("The date is already passed!");
                     }else if(response.data.localeCompare("ko")===0){
                         setSuccessText("");
                         setErrorText("Error!");
@@ -83,42 +86,19 @@ function Booking(){
             }
     }
 
-
-
-
-
-
-
     return(
             <React.Fragment>
-                { /** ################################ Choose instructor ################################ */ }
-                <div align="center">
-                   
-                    <Container disableGutters maxWidth="xs" component="main" sx={{ pt: 2, pb: 2 }} >
-                        
-                        <Box sx={{ minWidth:120 }}>
-                            <Typography style={{float:"left", marginBottom:'3%'}}>Choose instructor, date and slot</Typography>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Instructors</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={instructor}
-                                label="Instructors"
-                                onChange={handleChangeChooseInstructor}
-                                >
-                                    {instructorsList.map(e => (
-                                        <MenuItem 
-                                            key={e.id}
-                                            value={e.id}
-                                        >{e.emailMyUser}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                    </Container>
-                </div>
-                
+                <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
+                    <Typography
+                    component="h5"
+                    variant="h5"
+                    align="center"
+                    color="text.primary"
+                    gutterBottom
+                    >
+                    Booking
+                    </Typography>
+                </Container>
                 { /** ################################ Choose date ################################ */ }
                 <div align="center">      
                     <Container disableGutters maxWidth="md" component="main" sx={{ pt: 2, pb: 2 }} >
@@ -129,9 +109,36 @@ function Booking(){
                     </Container>
                 </div>
 
-                { /** ################################ Choose slot ################################ */ }
+                
                 <div align="center">      
                     <Container disableGutters maxWidth="md" component="main" sx={{ pt: 2, pb: 2 }} >
+                    <Paper>
+                    <Typography style={{float:"left", margin:'3%'}}>Book your reservation for {selectedDay}/{selectedMonth}/{selectedYear}</Typography>
+                    { /** ################################ Choose instructor ################################ */ }
+                        <div align="center">
+                            <Container disableGutters maxWidth="xs" component="main" sx={{ pt: 2, pb: 2 }} >
+                                <Box sx={{ minWidth:120 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Instructors</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={instructor}
+                                        label="Instructors"
+                                        onChange={handleChangeChooseInstructor}
+                                        >
+                                            {instructorsList.map(e => (
+                                                <MenuItem 
+                                                    key={e.id}
+                                                    value={e.id}
+                                                >{e.emailMyUser}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Container>
+                        </div>
+                        { /** ################################ Choose slot ################################ */ }
                         <FormControl component="fieldset">
                             <FormLabel component="legend"></FormLabel>
                             <RadioGroup
@@ -144,6 +151,11 @@ function Booking(){
                                 <FormControlLabel value="afternoon" control={<Radio />} label="Afternoon" />
                             </RadioGroup>
                         </FormControl>
+
+                        
+
+                    </Paper>
+                        
                     </Container>
                 </div>
 

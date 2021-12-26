@@ -1,10 +1,13 @@
 package com.example.simplesurfbackendms1.controllers;
 
+import com.example.simplesurfbackendms1.models.ClientId;
 import com.example.simplesurfbackendms1.models.Reservation;
+import com.example.simplesurfbackendms1.models.ReservationId;
 import com.example.simplesurfbackendms1.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,19 +33,48 @@ public class ReservationController {
             if(checkIfReservationExists(reservation)){
                 return "resExistYet";
             }else{
-                Long clientId = reservation.getClientId();
-                Long instructorId = reservation.getInstructorId();
-                String year = reservation.getYear();
-                String month = reservation.getMonth();
-                String day = reservation.getDay();
-                String slot = reservation.getSlot();
-                Reservation toAdd = new Reservation(clientId,instructorId,year,month,day,slot);
-                reservationRepository.save(toAdd);
-                return "ok";
+                if(checkIfDateIsPassed(reservation)){
+                    return "pastDate";
+                }else{
+                    Long clientId = reservation.getClientId();
+                    Long instructorId = reservation.getInstructorId();
+                    String year = reservation.getYear();
+                    String month = reservation.getMonth();
+                    String day = reservation.getDay();
+                    String slot = reservation.getSlot();
+                    Reservation toAdd = new Reservation(clientId,instructorId,year,month,day,slot);
+                    reservationRepository.save(toAdd);
+                    return "ok";
+                }
             }
         }
     }
 
+    @PostMapping(value = "/reservationsByClient", consumes = "application/json", produces = "application/json")
+    public List<Reservation> listByClient(@RequestBody ClientId ci){
+        System.out.println(ci.toString());
+        List<Reservation> myReservations = getReservations();
+        List<Reservation> myClientReservations = new ArrayList<>();
+        Long requestedId = ci.getClientId();
+        System.out.println("Client id di cui trovare le reservations "+requestedId);
+        for(int i = 0; i < myReservations.size(); i++){
+            Reservation tempReservation = myReservations.get(i);
+            Long tempClientId = tempReservation.getClientId();
+            System.out.println("Client id analizzato "+tempClientId);
+            if(tempClientId.equals(requestedId)){
+                System.out.println("entro");
+                myClientReservations.add(tempReservation);
+            }
+        }
+
+        return myClientReservations;
+    }
+
+    @PostMapping(value = "/reservations/deleteById", consumes = "application/json", produces = "application/json")
+    public void deleteById(@RequestBody ReservationId ri){
+        Long requestedId = ri.getReservationId();
+        reservationRepository.deleteById(requestedId);
+    }
     /**##############################################################################*/
 
     private List<Reservation> getReservations(){
@@ -51,11 +83,10 @@ public class ReservationController {
     }
 
     private boolean checkIfReservationExists(Reservation reservation){
-        System.out.println("Reservation richiesta: " + reservation.toString());
+
         boolean ret=false;
         List<Reservation> myReservationsList = getReservations();
         for(int i = 0 ; i < myReservationsList.size();i++){
-            System.out.println("Comparo con: " + myReservationsList.get(i));
             Reservation temp = myReservationsList.get(i);
             Long clientIdNew=reservation.getClientId();
             Long clientIdOld=temp.getClientId();
@@ -69,12 +100,6 @@ public class ReservationController {
             String reservationDayOld=temp.getDay();
             String reservationSlotNew=reservation.getSlot();
             String reservationSlotOld=temp.getSlot();
-            System.out.println(clientIdNew == clientIdOld);
-            System.out.println(instructorIdNew == instructorIdOld);
-            System.out.println(reservationYearNew.equals(reservationYearOld));
-            System.out.println(reservationMonthNew.equals(reservationMonthOld));
-            System.out.println(reservationDayNew.equals(reservationDayOld));
-            System.out.println(reservationSlotNew.equals(reservationSlotOld));
 
             if(
                 clientIdNew.equals(clientIdOld)&&
@@ -84,10 +109,44 @@ public class ReservationController {
                 reservationDayNew.equals(reservationDayOld)  &&
                 reservationSlotNew.equals(reservationSlotOld)
             ){
-                System.out.println("true");
                 ret=true;
             }
         }
+        return ret;
+    }
+
+    private boolean checkIfDateIsPassed(Reservation reservation){
+        boolean ret=false;
+
+        String reservationYearNew=reservation.getYear();
+        String reservationMonthNew=reservation.getMonth();
+        String reservationDayNew=reservation.getDay();
+        int reservationYear = Integer.parseInt(reservationYearNew);
+        int reservationMonth = Integer.parseInt(reservationMonthNew);
+        int reservationDay = Integer.parseInt(reservationDayNew);
+
+        LocalDate todaysDate = LocalDate.now();
+        int todayYear = todaysDate.getYear();
+        int todayMonth = todaysDate.getMonthValue()-1;
+        int todayDay = todaysDate.getDayOfMonth();
+        if(reservationYear>todayYear){
+        }else{
+           if(reservationYear<todayYear){
+               ret = true;
+           }else{
+               if(reservationMonth>todayMonth){
+               }else{
+                   if(reservationMonth<todayMonth){
+                       ret=true;
+                   }else{
+                       if(reservationDay<=todayDay){
+                           ret=true;
+                       }
+                   }
+               }
+           }
+        }
+
         return ret;
     }
 }
