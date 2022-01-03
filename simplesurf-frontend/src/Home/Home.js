@@ -19,18 +19,18 @@ const mainFeaturedPost = {
 
 const featuredPosts = [
   {
-    title: 'Title1',
-    date: 'Todo',
+    title: 'Private lessons',
+    date: 'The pure surf experience',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Our Private Lessons for all levels of surfers, made for who want to focus on perfection.',
     image: 'https://images.unsplash.com/photo-1513569143478-b38b2c0ef97f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
     imageLabel: 'Image Text',
   },
   {
-    title: 'Title2',
-    date: 'Todo',
+    title: 'Group lessons',
+    date: 'Surf with your friends',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Learn to surf with your group of friends in controlled envroiment and with the best instructors',
     image: 'https://images.unsplash.com/photo-1506797220058-533e019ac7fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
     imageLabel: 'Image Text',
   },
@@ -41,6 +41,7 @@ const featuredPosts = [
 export default function Home() {
   return (
       <div align="center">
+        {console.log(window.sessionStorage.getItem("loggedId"))}
         <Container disableGutters maxWidth="md" component="main" sx={{ pt: 2, pb: 2 }} >
             <main>
             <MainFeaturedPost post={mainFeaturedPost} />

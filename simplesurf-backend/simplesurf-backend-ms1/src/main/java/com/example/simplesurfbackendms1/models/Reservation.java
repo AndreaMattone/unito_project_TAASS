@@ -19,6 +19,7 @@ public class Reservation {
     private String day;
     private String slot;
 
+
     public Reservation() {
     }
     public Reservation(Long clientId, Long instructorId, String year, String month, String day, String slot) {

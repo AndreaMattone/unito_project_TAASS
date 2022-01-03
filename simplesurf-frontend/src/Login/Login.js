@@ -17,43 +17,62 @@ const theme = createTheme();
 function Login (){
   const history = useNavigate();
   
-
   /**
    * Check password Fittizio
    */
   function localLogin(){
-    if(password.localeCompare("admin")==0){
-      if(username.localeCompare("admin")==0){
-        var datas =
-        { 
-          "id": 10,
-          "emailMyUser" : "admin",
-          "isLog" : "true",
-          "usrResponsailities": "instructor"
-        }
-        axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
-        .then(function (response) {
-          console.log(response);
-          window.sessionStorage.setItem("loggedId",String(10));
-          window.location.reload();
-         })
-         .catch(function (error) {
-             console.log(error);
-          });
-          setLoginText("");
-          history('/Requests');
-      }else{
-        setLoginText("Incorrect Username");
-      }
+
+    //Check if user is registered
+    if(username.localeCompare("")==0){
+      setLoginText("Incorrect Username");
     }else{
-      setLoginText("Incorrect Password");
+      if(password.localeCompare("")==0){
+        setLoginText("Incorrect Password");
+      }else{
+        history('/Home');
+        var datas =
+          { 
+            "emailMyUser" : username,
+            "passwordMyUser" : password,
+          }
+        axios.post('http://localhost:3001/api/v1/myUsers/checkIfRegisteredAndLogin', datas)
+        .then(function (response) {
+          console.log(response.data);
+          if(response.data.toString().localeCompare("registeredAndKoPsw")===0){
+            //wrong password
+            setLoginText("Wrong password!");
+          }else if(response.data.toString().localeCompare("notRegistered")===0){
+            //not registered
+            setLoginText("Not Registered!");
+          }else{
+            //getUserDataByUsername
+            //setLoggedId
+            window.sessionStorage.setItem("loggedId",response.data.toString());
+            setLoginText("");
+            window.location.reload();
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        }); 
+      }
     }
   }
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+
+
+
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loginText, setLoginText] = useState("");
+
+
+
+
+  
   return(
     <React.Fragment>
+       {console.log(window.sessionStorage.getItem("loggedId"))}
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

@@ -19,9 +19,9 @@ import Home from './Home/Home.js';
 import Test from './Tests/Tests.js';
 import Requests from './Instructors/Requests';
 import Account from './Account/Account';
+import Signup from './Signup/Signup';
 
 /**
- * npm i react-scripts
  * npm i react-router-dom         //Routing
  * npm install @mui/material      //UI
  * npm install @emotion/react
@@ -77,6 +77,11 @@ function App() {
 
           <Route path="/Login" element={
             <Login/>
+          }>
+          </Route>
+
+          <Route path="/Signup" element={
+            <Signup/>
           }>
           </Route>
 

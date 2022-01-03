@@ -60,6 +60,7 @@ const Account=()=>{
           });
 
     }
+
     return(
         <React.Fragment>
             <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
@@ -100,7 +101,6 @@ const Account=()=>{
                             )
                         }
                 </Container>
-                
             </div>
         </React.Fragment>
     );

@@ -24,15 +24,14 @@ function LoginGoogle(){
     const googleEmail = res.profileObj.email;
     var datas =
     { 
-      "id": Number(googleId/100000),
       "emailMyUser" : googleEmail,
       "isLog" : "true",
       "usrResponsailities": "user"
     }
-    axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
+    axios.post('http://localhost:3001/api/v1/myUsers/loginGoogle', datas)
     .then(function (response) {
       console.log(response);
-      window.sessionStorage.setItem("loggedId",String(googleId/100000));
+      window.sessionStorage.setItem("loggedId",response.data.toString());
       window.location.reload();
      })
      .catch(function (error) {

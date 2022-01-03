@@ -46,6 +46,11 @@ const AppbarNotLogged = () =>{
                         <Button href="/Login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
                             Login
                         </Button>
+
+                        {/**Register button */}
+                        <Button href="/Signup" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                            Signup
+                        </Button>
     
                         
     

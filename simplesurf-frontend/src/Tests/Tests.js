@@ -20,6 +20,31 @@ const datasModified =
 }
 
 
+function test(){
+  var datas =
+          { 
+            "emailMyUser" : 'a',
+            "passwordMyUser" : 'a',
+          }
+        axios.post('http://localhost:3001/api/v1/myUsers/checkIfRegisteredAndLogin', datas)
+        .then(function (response) {
+          console.log(response.data);
+          
+          if(response.data.toString().localeCompare("registeredAndKoPsw")===0){
+            //wrong password
+          }else if(response.data.toString().localeCompare("notRegistered")===0){
+            //not registered
+          }else{
+            //getUserDataByUsername
+            //setLoggedId
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+          }
+         })
+         .catch(function (error) {
+             console.log(error);
+          });
+}
+
 
 function testPost(){
     axios.post('http://localhost:3001/api/v1/myUsers/create', datas)
@@ -93,6 +118,8 @@ const [value, onChange] = useState(new Date());
         <Button onClick={testIfExists} variant="outlined" >testIfExists</Button>
         <Button onClick={testResp} variant="outlined" >testResp</Button>
         <Button onClick={getUserInfo} variant="outlined" >getUserInfo</Button>
+        <Button onClick={test} variant="outlined" >test</Button>
+
       </div>
 
       <div  style={{margin:"30px"}}>

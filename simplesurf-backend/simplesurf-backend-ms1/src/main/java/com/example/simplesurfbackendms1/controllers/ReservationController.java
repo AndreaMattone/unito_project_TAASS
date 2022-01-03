@@ -1,6 +1,7 @@
 package com.example.simplesurfbackendms1.controllers;
 
 import com.example.simplesurfbackendms1.models.ClientId;
+import com.example.simplesurfbackendms1.models.InstructorId;
 import com.example.simplesurfbackendms1.models.Reservation;
 import com.example.simplesurfbackendms1.models.ReservationId;
 import com.example.simplesurfbackendms1.repositories.ReservationRepository;
@@ -52,11 +53,11 @@ public class ReservationController {
 
     @PostMapping(value = "/reservationsByClient", consumes = "application/json", produces = "application/json")
     public List<Reservation> listByClient(@RequestBody ClientId ci){
-        System.out.println(ci.toString());
+        //System.out.println(ci.toString());
         List<Reservation> myReservations = getReservations();
         List<Reservation> myClientReservations = new ArrayList<>();
         Long requestedId = ci.getClientId();
-        System.out.println("Client id di cui trovare le reservations "+requestedId);
+        //System.out.println("Client id di cui trovare le reservations "+requestedId);
         for(int i = 0; i < myReservations.size(); i++){
             Reservation tempReservation = myReservations.get(i);
             Long tempClientId = tempReservation.getClientId();
@@ -68,6 +69,23 @@ public class ReservationController {
         }
 
         return myClientReservations;
+    }
+
+    @PostMapping(value = "/reservationsByInstructor", consumes = "application/json", produces = "application/json")
+    public List<Reservation> listByInstructor(@RequestBody InstructorId ii){
+        List<Reservation> myReservations = getReservations();
+        List<Reservation> myInstructorReservations = new ArrayList<>();
+        Long requestedId = ii.getInstructorId();
+        for(int i = 0; i < myReservations.size(); i++){
+            Reservation tempReservation = myReservations.get(i);
+            Long tempInstructorId = tempReservation.getInstructorId();
+            //System.out.println("Client id analizzato "+tempInstructorId);
+            if(tempInstructorId.equals(requestedId)){
+                //System.out.println("entro");
+                myInstructorReservations.add(tempReservation);
+            }
+        }
+        return myInstructorReservations;
     }
 
     @PostMapping(value = "/reservations/deleteById", consumes = "application/json", produces = "application/json")
@@ -149,4 +167,13 @@ public class ReservationController {
 
         return ret;
     }
+
+
+
+
+
+
+
+
+
 }
