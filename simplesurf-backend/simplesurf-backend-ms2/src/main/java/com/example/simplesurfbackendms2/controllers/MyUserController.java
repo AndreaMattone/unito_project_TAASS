@@ -178,7 +178,7 @@ public class MyUserController {
             String tempEmail = userTmp.getEmailMyUser();
             String tempPsw = userTmp.getPasswordMyUser();
             if(tempEmail.equals(emailToCheck)){
-                if(tempPsw.equals(passwordToCheck)){
+                if(tempPsw.equals(passwordToCheck) && !passwordToCheck.equals("")){
                     System.out.println("Printing usrTemp: " + userTmp.toString());
                     String toRet = userTmp.getId()+"";
                     System.out.println(toRet);
