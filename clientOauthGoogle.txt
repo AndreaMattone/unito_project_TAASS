@@ -1,5 +1,0 @@
-Client OAuth google 
-Puoi accedere al secret e all'ID client in qualsiasi momento dalla pagine Credenziali in API e servizi
-L'accesso Oauth è limitato agli utenti di prova elencati nella tua schermata di consenso Oauth https://console.cloud.google.com/apis/credentials/consent?project=simplesurf&supportedpurview=project
-ID CLIENT 676143975475-1ahb1i1l14o5vbv28aleb7f3b63j9htf.apps.googleusercontent.com
-Client secret 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
