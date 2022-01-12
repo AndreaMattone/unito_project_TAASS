@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: myUsersModule
+          uri: http://localhost:3001/
+          predicates:
+            - Path=/api/v2/**
+        - id: reservationModule
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/api/v1/**
