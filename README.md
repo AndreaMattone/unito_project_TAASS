@@ -1,8 +1,14 @@
 # TAASSproject
 
+# BACKEND
+
+Launch 2 microservices on docker:
 For the backend follow the instruction https://github.com/AndreaMattone/Spike_SpringDockerPostgres
 (open two intellij projects for each microservie and follow the steps for each project)
 
+Launch the gateway in intellij
+
+# FRONTEND
 For the web frontend
 /**
  * npm i react-router-dom         //Routing
@@ -22,3 +28,6 @@ For the mobile frontend
  * expo install react-native-screens react-native-safe-area-context
  * 
  */
+
+# Usage
+You can use the app without the gateway using only the frontend, or you can use the gateway using postman calling localhost:8080
