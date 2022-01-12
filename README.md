@@ -42,5 +42,6 @@ Frontend ports:
 Frontends calls directly microservices on 
 * microservice 1 - localhost:8080
 * microservice 2 - localhost:3001
+* gateway - localhost:8081
 
 To test the gateway call with postman localhost:8081, for example localhost:8081/api/v2/myUsers instead of localhost:3001/api/v2/myUsers, you will be directly routed to the microservice 2
