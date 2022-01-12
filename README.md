@@ -2,6 +2,7 @@
 
 # BACKEND
 
+* test
 Launch 2 microservices on docker:
 For the backend follow the instruction https://github.com/AndreaMattone/Spike_SpringDockerPostgres
 (open two intellij projects for each microservie and follow the steps for each project)
