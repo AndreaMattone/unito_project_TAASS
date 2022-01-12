@@ -32,7 +32,7 @@ export default function Login (props) {
                 "emailMyUser" : username,
                 "passwordMyUser" : password,
               }
-            axios.post('http://localhost:3001/api/v1/myUsers/checkIfRegisteredAndLogin', datas)
+            axios.post('http://localhost:3001/api/v2/myUsers/checkIfRegisteredAndLogin', datas)
             .then(function (response) {
               console.log(response.data);
               if(response.data.toString().localeCompare("registeredAndKoPsw")===0){

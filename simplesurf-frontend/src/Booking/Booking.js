@@ -23,7 +23,7 @@ function Booking(){
     async function getInstructorsData(){
         try{
             const response = await fetch(
-                'http://localhost:3001/api/v1/myInstructors'
+                'http://localhost:3001/api/v2/myInstructors'
             );
             const data = await response.json();
             setInstructorsList(data);

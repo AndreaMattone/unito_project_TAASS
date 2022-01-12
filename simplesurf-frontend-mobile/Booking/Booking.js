@@ -36,7 +36,6 @@ export default function Booking  (props)  {
         axios.post('http://localhost:8080/api/v1/reservations/deleteById',resDatas)
         .then(function (response) {
           console.log(response);
-
          })
          .catch(function (error) {
              console.log(error);
@@ -63,9 +62,32 @@ export default function Booking  (props)  {
     let selectedDay = selectedDateOnCalendar.getDate(); //giorno del mese
     let selectedMonth = selectedDateOnCalendar.getMonth(); //gennaio 0, lunedi 1, martedi 2...
     let selectedYear = selectedDateOnCalendar.getFullYear(); //2021
+    
+    
+    function localLogout(){
+        var datas =
+        { 
+          "id" : props.loggedId,
+          "isLog" : "false",
+        }
+        axios.post('http://localhost:3001/api/v2/myUsers/update', datas)
+        .then(function (response) {
+          console.log(response.data);
+          props.navigation.navigate('Home', { id: response.data })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });  
+      }
+
 
     return(
         <View style={styles.container}>
+            <Button
+                onPress={localLogout}
+                title="Logout"
+                color="#841584"
+            />
             <Text style={{marginTop:'1%',marginBottom:'1px'}}>Choose Slot</Text>
             <Calendar
                     onChange={setSelectedDateOnCalendar}

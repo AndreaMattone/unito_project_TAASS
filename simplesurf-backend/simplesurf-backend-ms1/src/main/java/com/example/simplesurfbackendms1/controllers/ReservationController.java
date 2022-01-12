@@ -21,7 +21,10 @@ public class ReservationController {
     private ReservationRepository reservationRepository;
 
     @GetMapping("/reservations")
-    public List<Reservation> list() { return reservationRepository.findAll(); }
+    public List<Reservation> list() {
+        System.out.println("Ciao");
+        return reservationRepository.findAll();
+    }
 
     @PostMapping(value = "/reservations/create", consumes = "application/json", produces = "application/json")
     public String create(@RequestBody Reservation reservation){

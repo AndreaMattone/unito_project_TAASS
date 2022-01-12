@@ -3,7 +3,9 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { Typography } from '@mui/material';
 
 function Tests () {
  
@@ -26,7 +28,7 @@ function test(){
             "emailMyUser" : 'a',
             "passwordMyUser" : 'a',
           }
-        axios.post('http://localhost:3001/api/v1/myUsers/checkIfRegisteredAndLogin', datas)
+        axios.post('http://localhost:3001/api/v2/myUsers/checkIfRegisteredAndLogin', datas)
         .then(function (response) {
           console.log(response.data);
           
@@ -47,7 +49,7 @@ function test(){
 
 
 function testPost(){
-    axios.post('http://localhost:3001/api/v1/myUsers/create', datas)
+    axios.post('http://localhost:3001/api/v/myUsers/create', datas)
     .then(function (response) {
       console.log(response);
      })
@@ -56,12 +58,12 @@ function testPost(){
       });
 }
 function testGet(){
-      axios.get('http://localhost:3001/api/v1/myUsers')
+      axios.get('http://localhost:3001/api/v2/myUsers')
       .then(response => console.log(response.data));
 }
 
 function getUserInfo(){
-  axios.post('http://localhost:3001/api/v1/myUsers/getMyUserInfo',datas)
+  axios.post('http://localhost:3001/api/v2/myUsers/getMyUserInfo',datas)
   .then(function (response) {
     console.log(response);
    })
@@ -70,15 +72,15 @@ function getUserInfo(){
     });
 }
 function testGetClients(){
-  axios.get('http://localhost:3001/api/v1/myClients')
+  axios.get('http://localhost:3001/api/v2/myClients')
   .then(response => console.log(response.data));
 }
 function testGetInstructors(){
-  axios.get('http://localhost:3001/api/v1/myInstructors')
+  axios.get('http://localhost:3001/api/v2/myInstructors')
   .then(response => console.log(response.data));
 }
 function testUpdate(){
-    axios.post('http://localhost:3001/api/v1/myUsers/update', datasModified)
+    axios.post('http://localhost:3001/api/v2/myUsers/update', datasModified)
     .then(function (response) {
       console.log(response);
      })
@@ -87,7 +89,7 @@ function testUpdate(){
       });
 }
 function testIfExists(){
-    axios.post('http://localhost:3001/api/v1/myUsers/checkIfUserExists', datas)
+    axios.post('http://localhost:3001/api/v2/myUsers/checkIfUserExists', datas)
     .then(function (response) {
       console.log(response);
      })
@@ -96,7 +98,7 @@ function testIfExists(){
       });
 }
 function testResp(){
-  axios.post('http://localhost:3001/api/v1/myUsers/getResp', datas)
+  axios.post('http://localhost:3001/api/v2/myUsers/getResp', datas)
   .then(function (response) {
     console.log(response);
     console.log(response.data);
@@ -109,6 +111,21 @@ function testResp(){
 const [value, onChange] = useState(new Date());
   return (
     <React.Fragment>
+<div style={{margin:'100px'}}>
+      <Typography>Indica quante canzoni di ogni mood ha prodotto il seguente artista</Typography>
+      <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField id="outlined-basic" label="Artist" variant="outlined" />
+    </Box>
+    <Button>Commit</Button>
+    </div>
+
       <div style={{margin:"30px"}}>
         <Button onClick={testPost} variant="outlined">testPost</Button>
         <Button onClick={testGet} variant="outlined" >testGet</Button>

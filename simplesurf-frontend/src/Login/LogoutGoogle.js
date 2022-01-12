@@ -20,7 +20,7 @@ const onSuccess = () => {
       "id": Number(window.sessionStorage.getItem("loggedId")),
       "isLog" : "false",
     }
-    axios.post('http://localhost:3001/api/v1/myUsers/update', datas)
+    axios.post('http://localhost:3001/api/v2/myUsers/update', datas)
     .then(function (response) {
       console.log(response);
       window.sessionStorage.setItem("loggedId",null);

@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v2")
 public class MyUserController {
 
     @Autowired
@@ -26,7 +26,9 @@ public class MyUserController {
 
     /*Get a list of all the users*/
     @GetMapping("/myUsers")
-    public List<MyUser> list() { return myUserRepository.findAll(); }
+    public List<MyUser> list() {
+        return myUserRepository.findAll();
+    }
 
     /*Get a list of all the users with role "client"*/
     @GetMapping("/myClients")
@@ -58,6 +60,11 @@ public class MyUserController {
         }
         //System.out.println(instructorsList);
         return instructorsList;
+    }
+
+    @GetMapping("/test")
+    public void test() {
+        System.out.println("Test");
     }
 
     /**################################# POST ###############################*/

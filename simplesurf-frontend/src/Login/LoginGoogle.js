@@ -28,7 +28,7 @@ function LoginGoogle(){
       "isLog" : "true",
       "usrResponsailities": "user"
     }
-    axios.post('http://localhost:3001/api/v1/myUsers/loginGoogle', datas)
+    axios.post('http://localhost:3001/api/v2/myUsers/loginGoogle', datas)
     .then(function (response) {
       console.log(response);
       window.sessionStorage.setItem("loggedId",response.data.toString());

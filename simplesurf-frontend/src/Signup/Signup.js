@@ -28,7 +28,7 @@ const Signup = () => {
         "isLog" : "false",
         "usrResponsailities": "instructor"
       }
-      axios.post('http://localhost:3001/api/v1/myUsers/create', datas)
+      axios.post('http://localhost:3001/api/v2/myUsers/create', datas)
       .then(function (response) {
         console.log(response);
         window.location.reload();

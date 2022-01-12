@@ -16,7 +16,7 @@ function Appbar(){
             setUsrResponsability("null");
         }else{
             try{
-                axios.post('http://localhost:3001/api/v1/myUsers/getResp', {"id": Number(window.sessionStorage.getItem("loggedId"))})
+                axios.post('http://localhost:3001/api/v2/myUsers/getResp', {"id": Number(window.sessionStorage.getItem("loggedId"))})
                 .then(function (response) {
                   //console.log(response);
                   //console.log(response.data);
